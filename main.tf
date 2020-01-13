@@ -19,6 +19,10 @@ resource "google_compute_instance" "default" {
 
   // Make sure flask is installed on all new instances for later steps
   //metadata_startup_script = "sudo apt-get update; sudo apt-get install -yq build-essential python-pip rsync; pip install flask"
+  metadata = {
+    ssh-keys = "mif:${file("~/.ssh/id_rsa.pub")}"
+  }
+
   metadata_startup_script = "${file("startup.sh")}"
 
   network_interface {
@@ -29,10 +33,10 @@ resource "google_compute_instance" "default" {
     }
   }
 
-  //provisioner "file" {
-  //  source      = "script.sh"
-  //  destination = "/tmp/script.sh"
-  //}
+  provisioner "file" {
+    source      = "demo.conf"
+    destination = "/tmp/demo.conf"
+  }
 }
 
 resource "google_compute_firewall" "default" {
