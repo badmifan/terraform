@@ -36,6 +36,13 @@ resource "google_compute_instance" "default" {
   provisioner "file" {
     source      = "demo.conf"
     destination = "/tmp/demo.conf"
+
+    connection {
+      type        = "ssh"
+      user        = "mif"
+      private_key = "${file("~/.ssh/id_rsa")}"
+      agent       = false
+    }
   }
 }
 
