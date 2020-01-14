@@ -20,7 +20,7 @@ resource "google_compute_instance" "default" {
   // Make sure flask is installed on all new instances for later steps
   //metadata_startup_script = "sudo apt-get update; sudo apt-get install -yq build-essential python-pip rsync; pip install flask"
   metadata = {
-    ssh-keys = "mif:${file("~/.ssh/id_rsa.pub")}"
+    ssh-keys = "mikhaild:${file("~/.ssh/id_rsa.pub")}"
   }
 
   metadata_startup_script = "${file("startup.sh")}"
@@ -38,8 +38,9 @@ resource "google_compute_instance" "default" {
     destination = "/tmp/demo.conf"
 
     connection {
+      host        = self.network_interface.0.access_config.0.nat_ip
       type        = "ssh"
-      user        = "mif"
+      user        = "mikhaild"
       private_key = "${file("~/.ssh/id_rsa")}"
       agent       = false
     }
