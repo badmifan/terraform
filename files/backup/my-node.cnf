@@ -1,7 +1,3 @@
-[mysqld]
-# Options for mysqld process:
-ndbcluster                      # run NDB storage engine
-
 [mysql_cluster]
 # Options for NDB Cluster processes:
 ndb-connectstring=master_ip  # location of cluster manager
